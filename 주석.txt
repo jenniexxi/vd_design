@@ -1,0 +1,13 @@
+index.html
+주석 :
+<!--vd design-->
+<!--vd design e-->
+
+
+qled.js
+주석 :
+//vd design function - 파악해야할 부분
+//vd design function - 파악해야할 부분 e
+// 바꿔야 하는 부분
+// 바꿔야 하는 부분 e
+
