@@ -1,0 +1,70 @@
+set이 아니면 null로 나오고 
+__vdDesignXstyle , VD_DESIGN.ELEM.__ITEM_LIST.getAttribute('style') 자체가 null 값으로 나오는데
+이 부분이 왜 필요한건지 모르겠고,,,
+.match 를 쓰면 그때부터 error 뜨는데 그 error는 undefined 에러로 나오고...
+여기서부터 막혀서 계속 안되더라고...
+밑에서 찾아보면 VD_DESIGN.CALC.INNER_X('set'); 이 부분에서 'set' 말고 다른 문자 쓰면 그때부터 계속 다 error뜨고
+동작을 안하기 시작...
+
+
+if (__this !== 'set') {
+    __vdDesignXstyle = VD_DESIGN.ELEM.__ITEM_LIST.getAttribute('style').match(/\(.*\)/gi)[0].split(',');
+    __vdDesignXstyle.forEach((__value, __i) => {
+        if (__i === 0) __vdDesignX = Number(__value.replace(/[^0-9^.]/g, ''));
+    });
+}
+
+
+--------------------
+다 찍어봤었는데 왜 저런 값이 나오는지는 알겠는데 저거를 계산해서 어떻게 쓴다는건지 모르겠음,,,,
+단편적으로 이 부분만 계속 해석하려고만 해서 그럴수도 있고
+일단 이해가 안되니까 다른부분을 보려고 안한것도 잇는거 같음
+
+
+[].forEach.call(__vdDesignItemAllEl, (__el, __i) => {
+    let __elLeft = __el.offsetLeft;
+    let __elImgSize = __el.querySelector('img').offsetWidth / 2;
+
+    VD_DESIGN.ELEM.__RATING_ARRAY.push(
+        __i === 0 ? 0 : (__elLeft - __vdDesignInnerWidth) + __elImgSize
+    )
+    // console.log(VD_DESIGN.ELEM.__RATING_ARRAY);
+    // console.log(__el);
+    // console.log(__elLeft);
+    // console.log(__elImgSize);
+
+    if (__type === 'leave') __el.querySelector('.item-inner').classList.add('vd-scale');
+    if (__type === 'leaveBack') __el.querySelector('.item-inner').classList.remove('vd-scale');
+});
+
+__vdDesignInnerMarginLeft = parseInt(__vdDesignInnerMarginLeft.getPropertyValue('margin-left'));
+// console.log(__vdDesignInnerMarginLeft); //0
+
+
+
+----------------------
+아래 코드도 다 마찬가지로 왜 하는지를 모르겠음....
+
+
+VD_DESIGN.ELEM.__RATING_ARRAY.forEach((__rating, __i) => {
+    console.log(__rating)
+    if (__rating - 100 <= __vdDesignX && __rating + 100 >= __vdDesignX) {
+        __index = __i;
+    }
+    console.log(__vdDesignX);
+});
+
+if (__type === 'update') {
+    if (VD_DESIGN.ELEM.__DIRECTION === 1) __vdDesignItemAllEl[__index].querySelector('.item-inner').classList.add('vd-scale');
+    if (VD_DESIGN.ELEM.__DIRECTION === -1) __vdDesignItemAllEl[__index].querySelector('.item-inner').classList.remove('vd-scale');
+}
+
+if (__type === 'enter') {
+    VD_DESIGN.ELEM.__RATING_ARRAY.forEach((__rating, __i) => {
+        if (__rating <= -(__vdDesignX)) {
+            __vdDesignItemAllEl[__i].querySelector('.item-inner').classList.add('vd-scale');
+        } else {
+            __vdDesignItemAllEl[__i].querySelector('.item-inner').classList.remove('vd-scale');
+        }
+    });
+}
